@@ -1,5 +1,3 @@
-// some recursive functions and nature of them
-
 const logFn = (no: number): number => {
   /*
   - if the no is a power of 2 then it will return log2 no
@@ -42,8 +40,35 @@ const tailFactorial = (no: number, k: number): number => {
   return tailFactorial(no - 1, k * no);
 };
 
+const sumOfNNaturalNos = (no: number): number => {
+  // time complexity : Theta(no)
+  // space : Theta(no)
+  if (no <= 1) return 1;
+  else return no + sumOfNNaturalNos(no - 1);
+};
+
+const isPalindromeString = (
+  str: string,
+  start: number,
+  end: number,
+): boolean => {
+  // logic : if start and end characters are the same and the sub-string between
+  // them is palindrome then the whole string is palindrome
+  // time complexity : O(n) in worst case
+  // space complexity : Theta (n)
+  if (start >= end) return true;
+  return str[start] == str[end] && isPalindromeString(str, start + 1, end - 1);
+};
+
+const sumOfDigits = (no: number): number => {
+  // time complexity : O(d) where d is no of digits
+  // space complexity : Theta(d)
+  if (no <= 0) return 0;
+  return Math.floor(no % 10) + sumOfDigits(Math.floor(no / 10));
+};
+
 const main = () => {
-  console.log(tailFactorial(4, 1));
+  console.log(sumOfDigits(232));
 };
 
 main();
