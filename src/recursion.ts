@@ -67,8 +67,69 @@ const sumOfDigits = (no: number): number => {
   return Math.floor(no % 10) + sumOfDigits(Math.floor(no / 10));
 };
 
+const maxPieces = (no: number, a: number, b: number, c: number) => {
+  console.log("maxPieces :: ", { no, a, b, c });
+  // try all the solution and take the max
+  if (no == 0) return 0;
+  if (no < 0) return -1;
+
+  const result = Math.max(
+    maxPieces(no - a, a, b, c),
+    maxPieces(no - b, a, b, c),
+    maxPieces(no - c, a, b, c),
+  );
+
+  if (result == -1) return -1;
+  return result + 1;
+};
+
+const printStrSubsets = (
+  str: string,
+  curr: string = "",
+  idx: number = 0,
+): void => {
+  console.log("printStrSubsets :: ", {
+    str,
+    curr,
+    idx,
+  });
+  if (idx == str.length) {
+    console.log("result :: ", curr);
+    return;
+  }
+
+  printStrSubsets(str, curr, idx + 1);
+  printStrSubsets(str, `${curr}${str[idx]}`, idx + 1);
+};
+
+const calculateArraySubsets = <T>(
+  arr: T[],
+  curr: T[],
+  idx: number,
+  result: T[][],
+): void => {
+  if (idx >= arr.length) {
+    result.push([...curr]);
+    return;
+  }
+
+  // exclude
+  calculateArraySubsets(arr, curr, idx + 1, result);
+
+  // include
+  const ele = arr[idx];
+  if (ele) curr.push(ele);
+  calculateArraySubsets(arr, [...curr], idx + 1, result);
+  curr.pop();
+};
+
 const main = () => {
-  console.log(sumOfDigits(232));
+  const arr = [1, 2, 3];
+  const curr: number[] = [];
+  const result: number[][] = [];
+  calculateArraySubsets(arr, curr, 0, result);
+
+  console.log({ result });
 };
 
 main();
