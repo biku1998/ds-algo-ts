@@ -122,9 +122,42 @@ const recursiveBinarySearch = (
   else return recursiveBinarySearch(arr, mid + 1, end, x);
 };
 
+const sqrt = (x: number): number => {
+  let start = 1;
+  let end = x;
+  let ans = -1;
+
+  while (start <= end) {
+    const mid = Math.floor((start + end) / 2);
+    const sqrt = mid * mid;
+
+    if (sqrt == x) return mid;
+    else if (sqrt > x) end = mid - 1;
+    else {
+      start = mid + 1;
+      ans = mid;
+    }
+  }
+  return ans;
+};
+
+const findIdxInInfiniteArr = (arr: number[], x: number): number => {
+  if (arr.length == 0) return -1;
+  if (arr[0] == x) return 0;
+
+  let i = 1;
+
+  while (arr[i] < x) {
+    i = i * 2;
+    if (arr[i] == x) return i;
+    return recursiveBinarySearch(arr, Math.floor(i / 2 + 1), i - 1, x);
+  }
+  return -1;
+};
+
 const main = () => {
-  const arr = [5, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9];
-  console.log(countFrequency(arr, 8));
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15];
+  console.log(findIdxInInfiniteArr(arr, 11));
 };
 
 main();
